@@ -5,7 +5,7 @@ from feature import Bag,Gram
 from compassion import alpha_gradient_plot
  
 # 数据读取
-data_file_path = r"E:\Graduate\NLP\datasets\sentiment-analysis-on-movie-reviews\train.tsv"
+data_file_path = "D:/datasets/sentiment-analysis-on-movie-reviews/train.tsv"
 with open(data_file_path) as f:
     tsvreader = csv.reader(f, delimiter='\t')
     temp = list(tsvreader)
