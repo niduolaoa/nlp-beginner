@@ -3,10 +3,13 @@ import csv
 import random
 from feature import Bag,Gram
 from compassion import alpha_gradient_plot
+import platform
  
 # 数据读取
-data_file_path = "D:/datasets/sentiment-analysis-on-movie-reviews/train.tsv"
-with open(data_file_path) as f:
+data_on_windows = "D:/resources/datasets/sentiment-analysis-on-movie-reviews/train.tsv"
+data_on_linux = "../../datasets/sentiment-analysis-on-movie-reviews/train.tsv"
+os_name = platform.system()
+with open(data_on_windows if os_name == "Windows" else data_on_linux) as f:
     tsvreader = csv.reader(f, delimiter='\t')
     temp = list(tsvreader)
  
@@ -26,5 +29,5 @@ gram.get_words()
 gram.get_matrix()
  
 # 画图
-alpha_gradient_plot(bag,gram,10000,10)  # 计算10000次
-alpha_gradient_plot(bag,gram,100000,10)  # 计算100000次
+alpha_gradient_plot(bag, gram,10000, 10)  # 计算10000次
+alpha_gradient_plot(bag, gram,100000, 10)  # 计算100000次
