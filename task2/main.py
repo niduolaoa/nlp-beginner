@@ -5,16 +5,13 @@ from comparison_plot_batch import NN_embedding_plot
 import platform
 
 # 数据读入
-data_on_windows = "D:/resources/datasets/sentiment-analysis-on-movie-reviews/train.tsv"
-data_on_linux = "../../datasets/sentiment-analysis-on-movie-reviews/train.tsv"
-os_name = platform.system()
-with open(data_on_windows if os_name == "Windows" else data_on_linux) as f:
+data_path = "../../datasets/sentiment-analysis-on-movie-reviews/train.tsv"
+with open(data_path) as f:
     tsvreader = csv.reader(f, delimiter='\t')
     temp = list(tsvreader)
 
-embed_on_windows = "D:/resources/embeddings/glove.6B/glove.6B.50d"
-embed_on_linux = "/shared_data/pretrained_models/glove.6B.50d.txt"
-with open(embed_on_windows if os_name == "Windows" else embed_on_linux,'rb') as f:  # for glove embedding
+embeddings_path= "/shared_data/pretrained_models/glove.6B.50d.txt"
+with open(embeddings_path, 'rb') as f:  # for glove embedding
     lines = f.readlines()
 
 # 用GloVe创建词典
