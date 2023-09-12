@@ -148,4 +148,3 @@ def NN_plot(random_embedding, glove_embedding, len_feature, len_hidden, learning
     fig = plt.gcf()
     fig.set_size_inches(8, 8, forward=True)
     plt.savefig(save_folder + 'unsorted_data_plot.jpg')
-    plt.show()
