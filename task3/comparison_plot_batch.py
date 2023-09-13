@@ -9,7 +9,7 @@ import numpy
 import os
 
 
-def NN_embdding(model, train, test, learning_rate, iter_times):
+def NN_embedding(model, train, test, learning_rate, iter_times):
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
     loss_fun = F.cross_entropy
     train_loss_record = list()
@@ -20,6 +20,7 @@ def NN_embdding(model, train, test, learning_rate, iter_times):
 
     for iteration in range(iter_times):
         torch.cuda.empty_cache()
+        # 模型训练
         model.train()
         for i, batch in enumerate(train):
             torch.cuda.empty_cache()
@@ -31,13 +32,14 @@ def NN_embdding(model, train, test, learning_rate, iter_times):
             loss.backward()
             optimizer.step()
 
+        # 模型测试
         with torch.no_grad():
             model.eval()
             train_acc = list()
             test_acc = list()
             train_loss = 0
             test_loss = 0
-            
+            # 训练集
             for i, batch in enumerate(train):
                 torch.cuda.empty_cache()
                 x1, x2, y = batch
@@ -48,7 +50,7 @@ def NN_embdding(model, train, test, learning_rate, iter_times):
                 _, y_pre = torch.max(pred, -1)
                 acc = torch.mean((y_pre == y).float().clone().detach())
                 train_acc.append(acc)
-
+            # 测试集
             for i, batch in enumerate(test):
                 torch.cuda.empty_cache()
                 x1, x2, y = batch
@@ -100,13 +102,13 @@ def NN_plot(random_embedding, glove_embedding, len_feature, len_hidden, learning
     numpy.random.seed(2021)
     torch.cuda.manual_seed(2021)
     torch.manual_seed(2021)
-    trl_ran, tsl_ran, tra_ran, tea_ran = NN_embdding(random_model, train_random, test_random, learning_rate,
+    trl_ran, tsl_ran, tra_ran, tea_ran = NN_embedding(random_model, train_random, test_random, learning_rate,
                                                      iter_times)
     random.seed(2021)
     numpy.random.seed(2021)
     torch.cuda.manual_seed(2021)
     torch.manual_seed(2021)
-    trl_glo, tsl_glo, tra_glo, tea_glo = NN_embdding(glove_model, train_glove, test_glove, learning_rate,
+    trl_glo, tsl_glo, tra_glo, tea_glo = NN_embedding(glove_model, train_glove, test_glove, learning_rate,
                                                      iter_times)
     x = list(range(1, iter_times + 1))
 

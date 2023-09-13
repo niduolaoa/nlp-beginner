@@ -7,7 +7,7 @@ from feature_batch import get_batch
 import os
 
 
-def NN_embdding(model, train, test, learning_rate, iter_times):
+def NN_embedding(model, train, test, learning_rate, iter_times):
 	# 定义优化器（求参数）
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
     # 损失函数  
@@ -115,22 +115,22 @@ def NN_embedding_plot(random_embedding, glove_embedding, learning_rate, batch_si
     torch.manual_seed(2021)
     torch.cuda.manual_seed(2021)
     trl_ran_rnn, tel_ran_rnn, lol_ran_rnn, tra_ran_rnn, tes_ran_rnn, lon_ran_rnn = \
-        NN_embdding(random_rnn, train_random, test_random, learning_rate, iter_times)
+        NN_embedding(random_rnn, train_random, test_random, learning_rate, iter_times)
     # cnn+random
     torch.manual_seed(2021)
     torch.cuda.manual_seed(2021)
     trl_ran_cnn,tel_ran_cnn,lol_ran_cnn, tra_ran_cnn, tes_ran_cnn, lon_ran_cnn = \
-        NN_embdding(random_cnn, train_random, test_random, learning_rate, iter_times)
+        NN_embedding(random_cnn, train_random, test_random, learning_rate, iter_times)
     # rnn+glove
     torch.manual_seed(2021)
     torch.cuda.manual_seed(2021)
     trl_glo_rnn,tel_glo_rnn,lol_glo_rnn, tra_glo_rnn, tes_glo_rnn, lon_glo_rnn = \
-        NN_embdding(glove_rnn, train_glove,test_glove, learning_rate, iter_times)
+        NN_embedding(glove_rnn, train_glove,test_glove, learning_rate, iter_times)
     # cnn+glove
     torch.manual_seed(2021)
     torch.cuda.manual_seed(2021)
     trl_glo_cnn,tel_glo_cnn,lol_glo_cnn, tra_glo_cnn, tes_glo_cnn, lon_glo_cnn= \
-        NN_embdding(glove_cnn,train_glove,test_glove, learning_rate, iter_times)
+        NN_embedding(glove_cnn,train_glove,test_glove, learning_rate, iter_times)
     
     save_folder = "./result/"
     if not os.path.exists(save_folder):
