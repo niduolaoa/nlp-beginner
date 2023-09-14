@@ -42,9 +42,9 @@ def NN_embdding(model, train, test, learning_rate, iter_times,batch_size):
             pred = model.predict(x, mask)
             acc = (pred == y).float()
             len_batch,len_seq=acc.shape
-            points=torch.ones((1,len_batch)).cuda()
+            points = torch.ones((1,len_batch)).cuda()
             for j in range(len_seq):
-              points*=acc[:,j]
+              points *= acc[:,j]
             train_acc.append(points.mean())
 
         for i, batch in enumerate(test):
@@ -56,10 +56,10 @@ def NN_embdding(model, train, test, learning_rate, iter_times,batch_size):
             test_loss += loss.item() / batch_size / y.shape[1]
             pred = model.predict(x, mask)
             acc = (pred == y).float()
-            len_batch,len_seq=acc.shape
-            points=torch.ones((1,len_batch)).cuda()
+            len_batch,len_seq = acc.shape
+            points = torch.ones((1,len_batch)).cuda()
             for j in range(len_seq):
-              points*=acc[:,j]
+              points *= acc[:,j]
             test_acc.append(points.mean())
 
         trains_acc = sum(train_acc) / len(train_acc)

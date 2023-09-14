@@ -95,6 +95,7 @@ class CRF(nn.Module):
     def total_prob(self, scores, mask):
         batch_size, sequence_len, num_tags = scores.shape
         log_sum_exp_prob = self.transition[self.start_id, :].unsqueeze(0) + scores[:, 0]
+        # 用到了动态规划
         for i in range(1, sequence_len):
             every_log_sum_exp_prob = list()
             for j in range(num_tags):
@@ -114,6 +115,7 @@ class CRF(nn.Module):
         return torch.logsumexp(log_sum_exp_prob + tran_score, dim=1)
 
     def predict(self, scores, mask):
+        # 采用了常见且高效的动态规划算法——viterbi算法
         batch_size, sequence_len, num_tags = scores.shape
         total_prob = self.transition[self.start_id, :].unsqueeze(0) + scores[:, 0]
         tags = torch.cat([torch.tensor(range(num_tags)).view(1, -1, 1) for _ in range(batch_size)], dim=0).cuda()
@@ -128,12 +130,12 @@ class CRF(nn.Module):
 
             non_pad = mask[:, i].unsqueeze(-1)
             total_prob = non_pad * new_prob + (1 - non_pad) * total_prob
-            non_pad=non_pad.unsqueeze(-1)
-            temp_tag=torch.cat([torch.tensor(range(num_tags)).view(1, -1, 1) for _ in range(batch_size)], dim=0).cuda()
+            non_pad = non_pad.unsqueeze(-1)
+            temp_tag = torch.cat([torch.tensor(range(num_tags)).view(1, -1, 1) for _ in range(batch_size)], dim=0).cuda()
             append_tag = non_pad * temp_tag + (1 - non_pad) * torch.ones(batch_size, num_tags, 1).cuda() * self.pad_id
 
-            new_tag=new_tag.long()
-            pre_tag=tags[[ [i]*num_tags for i in range(batch_size)],new_tag[:,:,0],:]
+            new_tag = new_tag.long()
+            pre_tag = tags[[[i]*num_tags for i in range(batch_size)],new_tag[:,:,0],:]
 
             tags = torch.cat([pre_tag, append_tag], dim=-1)
 
