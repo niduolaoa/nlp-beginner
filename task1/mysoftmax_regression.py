@@ -56,7 +56,7 @@ class Softmax:
                 for j in range(batch_size):  # 随机抽K次
                     k = random.randint(0, self.sample - 1)
                     yhat = self.softmax_calculation(self.W.T.dot(X[k].reshape(-1, 1)))
-                    increment += X[k].reshape(-1, 1).dot((yhat - self.change_y(y[k])).T)  # 梯度加和
+                    increment += X[k].reshape(-1, 1).dot((yhat - self.change_y(y[k])).T)  # 交叉熵损失batch加和
                 self.W -= alpha / batch_size * increment  # 参数更新
         elif strategy == "shuffle":  # 随机梯度
             for i in range(times):

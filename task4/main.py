@@ -37,10 +37,10 @@ random_embedding.get_id()
 glove_embedding = Glove_embedding(train_zip, test_zip,trained_dict=trained_dict)
 glove_embedding.get_words()
 glove_embedding.get_id()
-
+print(glove_embedding.tag_dict)
 
 iter_times = 100
 learning_rate=0.001
 batch_size=100
 
-NN_plot(random_embedding,glove_embedding,50,50,learning_rate,batch_size,iter_times)
+# NN_plot(random_embedding,glove_embedding,50,50,learning_rate,batch_size,iter_times)

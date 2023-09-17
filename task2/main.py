@@ -2,7 +2,7 @@ import csv
 import random
 from feature_batch import Random_embedding, Glove_embedding
 from comparison_plot_batch import NN_embedding_plot
-import platform
+
 
 # 数据读入
 data_path = "../../datasets/sentiment-analysis-on-movie-reviews/train.tsv"
